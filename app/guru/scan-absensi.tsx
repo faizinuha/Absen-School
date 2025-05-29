@@ -1,10 +1,9 @@
 import { Ionicons } from '@expo/vector-icons';
-import type { BarCodeScannerResult } from 'expo-barcode-scanner';
-import { BarCodeScanner } from 'expo-barcode-scanner';
+import { BarCodeScanningResult, Camera } from 'expo-camera';
 import * as FileSystem from 'expo-file-system';
 import * as Haptics from 'expo-haptics';
 import { useRouter } from 'expo-router';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   Alert,
   Platform,
@@ -59,15 +58,16 @@ export default function AbsensiScanner() {
     izin: 0,
     alpha: 0,
   });
+  const [isProcessing, setIsProcessing] = useState(false);
+  const cameraRef = useRef<Camera | null>(null);
 
   useEffect(() => {
     requestCameraPermission();
     loadAbsensiStats();
   }, []);
 
-  // Tambahkan definisi fungsi requestCameraPermission
   const requestCameraPermission = async () => {
-    const { status } = await BarCodeScanner.requestPermissionsAsync();
+    const { status } = await Camera.requestCameraPermissionsAsync();
     setHasPermission(status === 'granted');
   };
 
@@ -120,13 +120,19 @@ export default function AbsensiScanner() {
     return absensiData;
   };
 
-  const handleBarCodeScanned = async ({ data }: BarCodeScannerResult) => {
+  // Ganti handleBarCodeScanned ke handleBarCodeScannedCamera
+  const handleBarCodeScannedCamera = async (result: BarCodeScanningResult) => {
+    if (isProcessing) return;
+    setIsProcessing(true);
     try {
+      const { data } = result;
+
       // Format barcode: SMK-{id}-{kelas}
       const [prefix, id, kelas] = data.split('-');
 
       if (prefix !== 'SMK') {
         Alert.alert('Error', 'Format barcode tidak valid');
+        setIsProcessing(false);
         return;
       }
 
@@ -142,6 +148,7 @@ export default function AbsensiScanner() {
 
       if (!student) {
         Alert.alert('Error', 'Data siswa tidak ditemukan');
+        setIsProcessing(false);
         return;
       }
 
@@ -165,6 +172,7 @@ export default function AbsensiScanner() {
 
       if (alreadyPresent) {
         Alert.alert('Info', 'Siswa sudah melakukan absensi hari ini');
+        setIsProcessing(false);
         return;
       }
 
@@ -198,13 +206,22 @@ export default function AbsensiScanner() {
     } catch (error) {
       console.error('Error processing barcode:', error);
       Alert.alert('Error', 'Gagal memproses absensi');
+    } finally {
+      setIsProcessing(false);
     }
   };
 
-  if (!hasPermission) {
+  if (hasPermission === null) {
     return (
       <View style={styles.container}>
         <Text>Meminta izin kamera...</Text>
+      </View>
+    );
+  }
+  if (hasPermission === false) {
+    return (
+      <View style={styles.container}>
+        <Text>Izin kamera ditolak</Text>
       </View>
     );
   }
@@ -217,7 +234,6 @@ export default function AbsensiScanner() {
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Absensi Scanner</Text>
       </View>
-
       <View style={styles.content}>
         <View style={styles.statsContainer}>
           <View style={styles.statBox}>
@@ -249,12 +265,28 @@ export default function AbsensiScanner() {
             <Text style={styles.statLabel}>Alpha</Text>
           </View>
         </View>
-
         {scanning ? (
           <View style={styles.scannerContainer}>
-            <BarCodeScanner
-              onBarCodeScanned={handleBarCodeScanned}
+            <Camera
+              ref={cameraRef}
               style={StyleSheet.absoluteFillObject}
+              type={CameraType.back}
+              onBarCodeScanned={handleBarCodeScannedCamera}
+              barCodeScannerSettings={{
+                barCodeTypes: [
+                  'qr',
+                  'code128',
+                  'code39',
+                  'code93',
+                  'ean13',
+                  'ean8',
+                  'upc_a',
+                  'upc_e',
+                  'pdf417',
+                  'aztec',
+                  'datamatrix',
+                ],
+              }}
             />
             <TouchableOpacity
               style={styles.cancelButton}

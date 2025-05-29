@@ -93,13 +93,13 @@ const LoginScreen: React.FC = () => {
         onPress: () => {
           switch (user.role) {
             case 'admin':
-              router.replace('/(tabs)/admin/dashboard');
+              router.replace('/admin/dashboard');
               break;
             case 'guru':
-              router.replace('/(tabs)/guru/dashboard');
+              router.replace('/guru/dashboard');
               break;
             case 'siswa':
-              router.replace('/(tabs)/siswa/dashboard');
+              router.replace('/siswa/dashboard');
               break;
           }
         },

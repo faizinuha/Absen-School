@@ -2,7 +2,9 @@
   "expo": {
     "name": "smkalazharabsen",
     "slug": "smkalazharabsen",
-    "version": "1.0.0",
+    "version": "1.0.0",    
+    // "jsEngine": "jsc",
+    "description": "Aplikasi Absen Siswa SMK Al Azhar Absen",
     "orientation": "portrait",
     "icon": "./assets/absen.jpg",
     "scheme": "smkalazharabsen",
