@@ -1,0 +1,19 @@
+{
+  "students": [],
+  "admins": [
+    {
+      "username": "admin",
+      "password": "admin123",
+      "role": "admin",
+      "name": "Administrator"
+    }
+  ],
+  "teachers": [
+    {
+      "username": "guru1",
+      "password": "guru123",
+      "role": "guru",
+      "name": "Guru 1"
+    }
+  ]
+}

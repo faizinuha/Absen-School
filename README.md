@@ -1,53 +1,114 @@
 > Edited for use in IDX on 07/09/12
 
-# Welcome to your Expo app 👋
+# Aplikasi Absensi SMK Al-Azhar 📱
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Aplikasi ini dibuat untuk memudahkan proses absensi di SMK Al-Azhar dengan menggunakan teknologi [Expo](https://expo.dev) dan React Native.
 
-## Get started
+## Struktur Role dan Alasan Pembagian 👥
 
-#### Android
+Aplikasi ini memiliki 3 role utama:
 
-Android previews are defined as a `workspace.onStart` hook and started as a vscode task when the workspace is opened/started.
+### 1. Admin 👨‍💼
+Admin memiliki akses penuh ke sistem dengan kemampuan:
+- Mengelola data siswa (tambah, edit, hapus)
+- Mengelola data guru
+- Melihat laporan absensi keseluruhan
+- Mengatur konfigurasi sistem
 
-Note, if you can't find the task, either:
-- Rebuild the environment (using command palette: `IDX: Rebuild Environment`), or
-- Run `npm run android -- --tunnel` command manually run android and see the output in your terminal. The device should pick up this new command and switch to start displaying the output from it.
+**Alasan**: Role admin diperlukan untuk:
+- Kontrol penuh atas sistem
+- Manajemen user (siswa dan guru)
+- Pengawasan dan pelaporan tingkat sekolah
+- Pemeliharaan data master
 
-In the output of this command/task, you'll find options to open the app in a
+### 2. Guru 👨‍🏫
+Guru memiliki akses untuk:
+- Menginput absensi siswa
+- Melihat rekap absensi kelas yang diampu
+- Mengelola jadwal mengajar
+- Mengupdate profil
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+**Alasan**: Role guru diperlukan untuk:
+- Pencatatan absensi harian
+- Monitoring kehadiran siswa
+- Pelaporan ke admin
+- Manajemen kelas
 
-You'll also find options to open the app's developer menu, reload the app, and more.
+### 3. Siswa 👨‍🎓
+Siswa memiliki akses untuk:
+- Melihat status kehadiran
+- Mengecek riwayat absensi
+- Melihat jadwal pelajaran
+- Mengupdate profil
 
-#### Web
+**Alasan**: Role siswa diperlukan untuk:
+- Transparansi data absensi
+- Akses informasi jadwal
+- Manajemen data pribadi
 
-Web previews will be started and managred automatically. Use the toolbar to manually refresh.
+## Fitur Utama yang Sudah Diimplementasikan ✨
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+1. **Sistem Autentikasi**
+   - Login multi-role (admin, guru, siswa)
+   - Registrasi khusus siswa
+   - Penyimpanan data di JSON lokal
 
-## Get a fresh project
+2. **Dashboard Khusus per Role**
+   - Interface yang berbeda untuk setiap role
+   - Menu yang disesuaikan dengan kebutuhan
+   - Navigasi yang intuitif
 
-When you're ready, run:
+3. **Manajemen Data**
+   - Penyimpanan data user
+   - Validasi input
+   - Penanganan error
 
-```bash
-npm run reset-project
+## Struktur Folder 📁
+
+```
+app/
+├── (tabs)/              # Halaman utama aplikasi
+│   ├── admin/           # Dashboard admin
+│   ├── guru/            # Dashboard guru
+│   └── siswa/           # Dashboard siswa
+├── authentication/      # Komponen autentikasi
+└── data/               # Penyimpanan data JSON
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## Teknologi yang Digunakan 🛠️
 
-## Learn more
+- Expo Router untuk navigasi
+- React Native untuk UI
+- TypeScript untuk type safety
+- Expo FileSystem untuk penyimpanan lokal
 
-To learn more about developing your project with Expo, look at the following resources:
+## Cara Penggunaan 📱
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+### Admin
+1. Login dengan akun admin default:
+   - Username: admin
+   - Password: admin123
 
-## Join the community
+### Guru
+1. Login dengan akun guru:
+   - Username: guru1
+   - Password: guru123
 
-Join our community of developers creating universal apps.
+### Siswa
+1. Registrasi akun baru
+2. Login dengan akun yang sudah dibuat
+3. Akses fitur siswa
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+## Pengembangan Selanjutnya 🚀
+
+Fitur yang akan ditambahkan:
+1. Implementasi absensi real-time
+2. Notifikasi ketidakhadiran
+3. Laporan bulanan
+4. Backup data cloud
+
+## Keamanan 🔒
+
+- Password tidak disimpan dalam bentuk plain text
+- Validasi input untuk mencegah injeksi
+- Pemisahan akses berdasarkan role

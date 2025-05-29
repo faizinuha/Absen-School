@@ -1,0 +1,12 @@
+{
+  "records": [],
+  "statistics": {
+    "totalStudents": 0,
+    "attendance": {
+      "present": 0,
+      "absent": 0,
+      "late": 0,
+      "excused": 0
+    }
+  }
+}

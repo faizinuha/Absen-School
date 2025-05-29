@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
 import Swiper from 'react-native-swiper';
+import { useRouter } from 'expo-router';
 
 const { width } = Dimensions.get('window');
 
@@ -22,6 +23,7 @@ const OnboardingStep: React.FC<OnboardingStepProps> = ({ title, description, ima
 
 const OnboardingScreen: React.FC = () => {
   const [swiperIndex, setSwiperIndex] = useState(0);
+  const router = useRouter();
 
   const onboardingData: OnboardingStepProps[] = [
     {
@@ -32,8 +34,7 @@ const OnboardingScreen: React.FC = () => {
   ];
 
   const handleGetStarted = () => {
-    // TODO: Navigate to the next screen (e.g., Login or Home)
-    console.log('Get Started pressed');
+    router.replace('/login');
   };
 
   return (
