@@ -46,6 +46,21 @@ Siswa memiliki akses untuk:
 - Akses informasi jadwal
 - Manajemen data pribadi
 
+## Struktur Folder 📁
+
+```
+app/
+├── (tabs)/              # Hanya halaman utama tabbar (index, explore, onboarding)
+├── admin/               # Semua fitur admin (dashboard, manajemen kelas, data guru, dsb)
+├── guru/                # Semua fitur guru (dashboard, absensi, scan-absensi, dsb)
+├── siswa/               # Semua fitur siswa (dashboard, dsb)
+├── authentication/      # Komponen autentikasi
+├── data/                # Penyimpanan data JSON
+└── components/          # Komponen UI
+```
+
+> Catatan: Sekarang tabbar hanya menampilkan tab utama (Home & Explore). Semua fitur admin/guru/siswa diakses lewat navigasi dari dashboard masing-masing, bukan sebagai tab.
+
 ## Fitur Utama yang Sudah Diimplementasikan ✨
 
 1. **Sistem Autentikasi**
@@ -54,26 +69,16 @@ Siswa memiliki akses untuk:
    - Penyimpanan data di JSON lokal
 
 2. **Dashboard Khusus per Role**
-   - Interface yang berbeda untuk setiap role
-   - Menu yang disesuaikan dengan kebutuhan
-   - Navigasi yang intuitif
+   - Interface berbeda untuk admin, guru, siswa
+   - Menu dashboard lengkap (admin: manajemen kelas, data siswa/guru, rekap, pengumuman, settings; guru: absensi, scan, jadwal, laporan, izin, profil; siswa: dashboard)
+   - Navigasi antar fitur sudah rapi
 
 3. **Manajemen Data**
-   - Penyimpanan data user
-   - Validasi input
-   - Penanganan error
-
-## Struktur Folder 📁
-
-```
-app/
-├── (tabs)/              # Halaman utama aplikasi
-│   ├── admin/           # Dashboard admin
-│   ├── guru/            # Dashboard guru
-│   └── siswa/           # Dashboard siswa
-├── authentication/      # Komponen autentikasi
-└── data/               # Penyimpanan data JSON
-```
+   - CRUD kelas (admin)
+   - CRUD data siswa/guru (admin, coming soon)
+   - Absensi barcode (guru)
+   - Statistik absensi harian (guru)
+   - Validasi input & penanganan error
 
 ## Teknologi yang Digunakan 🛠️
 
@@ -82,33 +87,24 @@ app/
 - TypeScript untuk type safety
 - Expo FileSystem untuk penyimpanan lokal
 
-## Cara Penggunaan 📱
+## Cara Navigasi & Penggunaan 📱
 
-### Admin
-1. Login dengan akun admin default:
-   - Username: admin
-   - Password: admin123
-
-### Guru
-1. Login dengan akun guru:
-   - Username: guru1
-   - Password: guru123
-
-### Siswa
-1. Registrasi akun baru
-2. Login dengan akun yang sudah dibuat
-3. Akses fitur siswa
+- Tabbar hanya untuk Home & Explore
+- Untuk masuk ke fitur admin/guru/siswa, login sesuai role lalu gunakan menu dashboard
+- Semua menu dashboard sudah tersedia, jika ada menu "Coming Soon" berarti fitur akan segera dikembangkan
 
 ## Pengembangan Selanjutnya 🚀
 
 Fitur yang akan ditambahkan:
-1. Implementasi absensi real-time
+1. Implementasi absensi real-time & lokasi
 2. Notifikasi ketidakhadiran
-3. Laporan bulanan
+3. Laporan bulanan & rekap
 4. Backup data cloud
+5. Pengumuman & pengaturan sistem
 
 ## Keamanan 🔒
 
 - Password tidak disimpan dalam bentuk plain text
 - Validasi input untuk mencegah injeksi
 - Pemisahan akses berdasarkan role
+- Struktur folder sudah dipisahkan agar navigasi lebih aman dan rapi

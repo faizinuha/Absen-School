@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { LoadingModal } from '../../../components/LoadingModal'; // Pastikan path ini sesuai dengan struktur project Anda
+import { LoadingModal } from '../../components/LoadingModal'; // Pastikan path ini sesuai dengan struktur project Anda
 
 export default function ManajemenKelas() {
   // const router = useRouter();
